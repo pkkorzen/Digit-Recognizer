@@ -25,5 +25,7 @@ public class Main {
                 .stream()
                 .map(x -> x.split(","))
                 .collect(Collectors.toList());
+
+        List<String[]> listOfData = listOfLines.subList(1, listOfLines.size());
     }
 }
