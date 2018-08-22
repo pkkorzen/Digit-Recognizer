@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,5 +28,14 @@ public class Main {
                 .collect(Collectors.toList());
 
         List<String[]> listOfData = listOfLines.subList(1, listOfLines.size());
+
+        List<List<Integer>> listOfIntegers = listOfData
+                .stream()
+                .map(x -> {
+                    return Arrays.stream(x)
+                            .map(y -> Integer.parseInt(y))
+                            .collect(Collectors.toList());
+                })
+                .collect(Collectors.toList());
     }
 }
