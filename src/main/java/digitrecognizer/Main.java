@@ -48,4 +48,12 @@ public class Main {
                 })
                 .collect(Collectors.toList());
     }
+
+    public static int distance(Integer[] a, Integer[] b){
+        int sum = 0;
+        for(int i = 0; i < a.length; i++){
+            sum+=(a[i]-b[i])*(a[i]-b[i]);
+        }
+        return (int)Math.sqrt(sum);
+    }
 }
