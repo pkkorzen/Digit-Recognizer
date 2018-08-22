@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,5 +56,19 @@ public class Main {
             sum+=(a[i]-b[i])*(a[i]-b[i]);
         }
         return (int)Math.sqrt(sum);
+    }
+
+    public static int predict(Integer[] pixels, List<Record> sampleRecords){
+        List<Number> listOfNumbers = sampleRecords
+                .stream()
+                .map(x -> {
+                    Number number = new Number();
+                    number.setNumber(x.getNumber());
+                    number.setDistance(distance(x.getPixels(), pixels));
+                    return number;
+                })
+                .sorted(Comparator.comparingInt(x-> x.getDistance()))
+                .collect(Collectors.toList());
+        return listOfNumbers.get(0).getNumber();
     }
 }
