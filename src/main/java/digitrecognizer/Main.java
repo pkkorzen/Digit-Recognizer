@@ -42,8 +42,8 @@ public class Main {
                 .stream()
                 .map(x -> {
                     Record record = new Record();
-                    record.Number = x.get(0);
-                    record.Pixels = x.subList(1, x.size()).toArray(new Integer[0]);
+                    record.setNumber(x.get(0));
+                    record.setPixels(x.subList(1, x.size()).toArray(new Integer[0]));
                     return record;
                 })
                 .collect(Collectors.toList());
