@@ -14,6 +14,15 @@ public class Main {
     public static void main(String[] args) {
 
         List <Record> trainingRecords = retrieveRecordsFromFile("TrainingSample.csv");
+        List <Record> validationRecords = retrieveRecordsFromFile("ValidationSample.csv");
+
+        int sum = 0;
+        for (int i = 0; i < validationRecords.size(); i++){
+            if(validationRecords.get(i).getNumber()==predict(validationRecords.get(i).getPixels(), trainingRecords)){
+                sum++;
+            }
+        }
+        System.out.printf("Procent rozpoznanych obrazków: %.1f%s",(double)sum/500*100,"%");
     }
 
     public static int distance(Integer[] a, Integer[] b){
