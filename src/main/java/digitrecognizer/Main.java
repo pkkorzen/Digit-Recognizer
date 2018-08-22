@@ -13,41 +13,7 @@ import java.util.stream.Collectors;
 public class Main {
     public static void main(String[] args) {
 
-        Path path = Paths.get("TrainingSample.csv");
-
-        List<String> listOfPixels = new ArrayList<>();
-        try {
-            listOfPixels = Files.readAllLines(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Nie znaleziono pliku");
-        }
-
-        List<String[]> listOfLines = listOfPixels
-                .stream()
-                .map(x -> x.split(","))
-                .collect(Collectors.toList());
-
-        List<String[]> listOfData = listOfLines.subList(1, listOfLines.size());
-
-        List<List<Integer>> listOfIntegers = listOfData
-                .stream()
-                .map(x -> {
-                    return Arrays.stream(x)
-                            .map(y -> Integer.parseInt(y))
-                            .collect(Collectors.toList());
-                })
-                .collect(Collectors.toList());
-
-        List <Record> listOfRecords = listOfIntegers
-                .stream()
-                .map(x -> {
-                    Record record = new Record();
-                    record.setNumber(x.get(0));
-                    record.setPixels(x.subList(1, x.size()).toArray(new Integer[0]));
-                    return record;
-                })
-                .collect(Collectors.toList());
+        List <Record> trainingRecords = retrieveRecordsFromFile("TrainingSample.csv");
     }
 
     public static int distance(Integer[] a, Integer[] b){
@@ -70,5 +36,34 @@ public class Main {
                 .sorted(Comparator.comparingInt(x-> x.getDistance()))
                 .collect(Collectors.toList());
         return listOfNumbers.get(0).getNumber();
+    }
+
+    public static List <Record> retrieveRecordsFromFile(String fileName){
+        Path path = Paths.get(fileName);
+
+        List<String> listOfLines = new ArrayList<>();
+        try {
+            listOfLines = Files.readAllLines(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Nie znaleziono pliku");
+        }
+        List<Record> records = listOfLines.subList(1, listOfLines.size())
+                .stream()
+                .map(x -> x.split(","))
+                .map(x -> {
+                    return Arrays.stream(x)
+                            .map(y -> Integer.parseInt(y))
+                            .collect(Collectors.toList());
+                })
+                .map(x -> {
+                    Record record = new Record();
+                    record.setNumber(x.get(0));
+                    record.setPixels(x.subList(1, x.size()).toArray(new Integer[0]));
+                    return record;
+                })
+                .collect(Collectors.toList());
+        return records;
+
     }
 }
