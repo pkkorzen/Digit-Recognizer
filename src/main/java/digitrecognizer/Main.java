@@ -37,5 +37,15 @@ public class Main {
                             .collect(Collectors.toList());
                 })
                 .collect(Collectors.toList());
+
+        List <Record> listOfRecords = listOfIntegers
+                .stream()
+                .map(x -> {
+                    Record record = new Record();
+                    record.Number = x.get(0);
+                    record.Pixels = x.subList(1, x.size()).toArray(new Integer[0]);
+                    return record;
+                })
+                .collect(Collectors.toList());
     }
 }
